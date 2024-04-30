@@ -1,4 +1,4 @@
-# A template user project for use with Chaste.
+# Liver Metastasis: Chaste Hackathon Trinity 2024.
 
 You now simply log in to github, then click the big green "Use this template" button to use a copy of this repository as the basis of your own new repository under your github username/organisation (this 'template' status avoids complications with forks all being linked back to this repo).
 
