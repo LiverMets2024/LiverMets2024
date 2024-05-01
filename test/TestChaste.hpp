@@ -11,6 +11,10 @@
 #include "CellwiseSourceEllipticPde.hpp"
 #include "ConstBoundaryCondition.hpp"
 #include "EllipticGrowingDomainPdeModifier.hpp"
+#include "UniformG1GenerationalCellCycleModel.hpp"
+#include "DifferentiatedCellProliferativeType.hpp"
+#include "CellProliferativeTypesWriter.hpp"
+#include "CellAgesWriter.hpp"
 
 #include "OffLatticeSimulation.hpp"
 #include "PetscSetupAndFinalize.hpp"
@@ -29,22 +33,43 @@ public:
 
         MAKE_PTR(WildTypeCellMutationState, p_state);
         MAKE_PTR(StemCellProliferativeType, p_stem_type);
+        boost::shared_ptr<DifferentiatedCellProliferativeType> p_differentiated_type = boost::make_shared<DifferentiatedCellProliferativeType>();
 
         for (unsigned i=0; i<p_mesh->GetNumNodes(); i++)
         {
-            SimpleOxygenBasedCellCycleModel* p_model = new SimpleOxygenBasedCellCycleModel;
-            p_model->SetDimension(2);
-            CellPtr p_cell(new Cell(p_state, p_model));
-            p_cell->SetCellProliferativeType(p_stem_type);
+            // For each location create a cell
+            double r = RandomNumberGenerator::Instance()->ranf();
+            if (r < .9)
+            {
+                // Create a tumour cell
+                SimpleOxygenBasedCellCycleModel* p_model = new SimpleOxygenBasedCellCycleModel;
+                p_model->SetDimension(2);
+                CellPtr p_cell(new Cell(p_state, p_model));
+                p_cell->SetCellProliferativeType(p_stem_type);
 
-            p_model->SetStemCellG1Duration(8.0);
-            p_model->SetTransitCellG1Duration(8.0);
+                p_model->SetStemCellG1Duration(8.0);
+                p_model->SetTransitCellG1Duration(8.0);
 
-            double birth_time = - RandomNumberGenerator::Instance()->ranf() *
-                                 (  p_model->GetStemCellG1Duration()
-                                  + p_model->GetSG2MDuration() );
-            p_cell->SetBirthTime(birth_time);
-            cells.push_back(p_cell);
+                double birth_time = - RandomNumberGenerator::Instance()->ranf() *
+                                    (  p_model->GetStemCellG1Duration()
+                                    + p_model->GetSG2MDuration() );
+                p_cell->SetBirthTime(birth_time);
+                cells.push_back(p_cell);
+            }
+            else
+            {
+                // Create a neutrophil
+                UniformG1GenerationalCellCycleModel* p_model = new UniformG1GenerationalCellCycleModel;
+                p_model->SetDimension(2);
+
+                CellPtr p_cell(new Cell(p_state, p_model));
+                p_cell->SetCellProliferativeType(p_differentiated_type);
+
+                double birth_time = - RandomNumberGenerator::Instance()->ranf();
+                p_cell->SetBirthTime(birth_time);
+
+                cells.push_back(p_cell);
+            }
         }
 
         MeshBasedCellPopulation<2> cell_population(*p_mesh, cells);
@@ -67,6 +92,10 @@ public:
         MAKE_PTR(GeneralisedLinearSpringForce<2>, p_linear_force);
         p_linear_force->SetCutOffLength(3);
         simulator.AddForce(p_linear_force);
+
+
+        cell_population.AddCellWriter<CellProliferativeTypesWriter>();
+        m_cellPopulation->AddCellWriter<CellAgesWriter>();
 
         simulator.Solve();
     }
