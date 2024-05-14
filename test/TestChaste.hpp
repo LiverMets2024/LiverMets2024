@@ -61,7 +61,7 @@ public:
         simulator.AddSimulationModifier(p_pde_modifier);
 
         simulator.SetOutputDirectory("SpheroidTutorial");
-        simulator.SetEndTime(50.0);
+        simulator.SetEndTime(2.0);
         simulator.SetSamplingTimestepMultiple(10);
 
         MAKE_PTR(GeneralisedLinearSpringForce<2>, p_linear_force);
