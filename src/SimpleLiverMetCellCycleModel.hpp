@@ -30,6 +30,42 @@ private:
      */
     double mMaxCellCycleDurationTCell;
 
+        /**
+     * The minimum cell cycle duration. Used to define the uniform distribution.
+     * Defaults to 12 hours.
+     */
+    double mMinCellCycleDurationMetCell;
+
+    /**
+     * The maximum cell cycle duration. Used to define the uniform distribution.
+     * Defaults to 14 hours.
+     */
+    double mMaxCellCycleDurationMetCell;
+
+        /**
+     * The minimum cell cycle duration. Used to define the uniform distribution.
+     * Defaults to 12 hours.
+     */
+    double mMinCellCycleDurationNeutrophil;
+
+    /**
+     * The maximum cell cycle duration. Used to define the uniform distribution.
+     * Defaults to 14 hours.
+     */
+    double mMaxCellCycleDurationNeutrophil;
+
+        /**
+     * The minimum cell cycle duration. Used to define the uniform distribution.
+     * Defaults to 12 hours.
+     */
+    double mMinCellCycleDurationFibroblast;
+
+    /**
+     * The maximum cell cycle duration. Used to define the uniform distribution.
+     * Defaults to 14 hours.
+     */
+    double mMaxCellCycleDurationFibroblast;
+
     /** Needed for serialization. */
     friend class boost::serialization::access;
     /**
@@ -48,6 +84,12 @@ private:
         archive & p_wrapper;
         archive & mMinCellCycleDurationTCell;
         archive & mMaxCellCycleDurationTCell;
+        archive & mMinCellCycleDurationMetCell;
+        archive & mMaxCellCycleDurationMetCell;
+        archive & mMinCellCycleDurationNeutrophil;
+        archive & mMaxCellCycleDurationNeutrophil;
+        archive & mMinCellCycleDurationFibroblast;
+        archive & mMaxCellCycleDurationFibroblast;
     }
 
 protected:
@@ -118,6 +160,104 @@ public:
      * @return the average of mMinCellCycleDuration and mMaxCellCycleDuration
      */
     double GetAverageCellCycleTimeForTCell();
+
+
+    /**
+     * @return mMinCellCycleDuration
+     */
+    double GetMinCellCycleDurationForMetCell();
+
+    /**
+     * Set mMinCellCycleDuration.
+     *
+     * @param minCellCycleDurationMetCell
+     */
+    void SetMinCellCycleDurationForMetCell(double minCellCycleDurationMetCell);
+
+    /**
+     * @return mMaxCellCycleDuration
+     */
+    double GetMaxCellCycleDurationForMetCell();
+
+    /**
+     * Set mMaxCellCycleDuration.
+     *
+     * @param maxCellCycleDurationMetCell
+     */
+    void SetMaxCellCycleDurationForMetCell(double maxCellCycleDurationMetCell);
+
+    /**
+     * Overridden GetAverageTransitCellCycleTime() method.
+     *
+     * @return the average of mMinCellCycleDuration and mMaxCellCycleDuration
+     */
+    double GetAverageCellCycleTimeForMetCell();
+
+
+       /**
+     * @return mMinCellCycleDuration
+     */
+    double GetMinCellCycleDurationForNeutrophil();
+
+    /**
+     * Set mMinCellCycleDuration.
+     *
+     * @param minCellCycleDurationNeutrophil
+     */
+    void SetMinCellCycleDurationForNeutrophil(double minCellCycleDurationNeutrophil);
+
+    /**
+     * @return mMaxCellCycleDuration
+     */
+    double GetMaxCellCycleDurationForNeutrophil();
+
+    /**
+     * Set mMaxCellCycleDuration.
+     *
+     * @param maxCellCycleDurationNeutrophil
+     */
+    void SetMaxCellCycleDurationForNeutrophil(double maxCellCycleDurationNeutrophil);
+
+    /**
+     * Overridden GetAverageTransitCellCycleTime() method.
+     *
+     * @return the average of mMinCellCycleDuration and mMaxCellCycleDuration
+     */
+    double GetAverageCellCycleTimeForNeutrophil();
+
+
+         /**
+     * @return mMinCellCycleDuration
+     */
+    double GetMinCellCycleDurationForFibroblast();
+
+    /**
+     * Set mMinCellCycleDuration.
+     *
+     * @param minCellCycleDurationFibroblast
+     */
+    void SetMinCellCycleDurationForFibroblast(double minCellCycleDurationFibroblast);
+
+    /**
+     * @return mMaxCellCycleDuration
+     */
+    double GetMaxCellCycleDurationForFibroblast();
+
+    /**
+     * Set mMaxCellCycleDuration.
+     *
+     * @param maxCellCycleDurationFibroblast
+     */
+    void SetMaxCellCycleDurationForFibroblast(double maxCellCycleDurationFibroblast);
+
+    /**
+     * Overridden GetAverageTransitCellCycleTime() method.
+     *
+     * @return the average of mMinCellCycleDuration and mMaxCellCycleDuration
+     */
+    double GetAverageCellCycleTimeForFibroblast();
+
+
 
         /**
      * Overridden GetAverageTransitCellCycleTime() method.
