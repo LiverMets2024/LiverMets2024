@@ -33,26 +33,30 @@
 #include "BackgroundCellProliferativeType.hpp"
 #include "SimpleLiverMetCellCycleModel.hpp"
 
+//new force models
+#include "RandomMotionForce.hpp"
+
+
 class TestLiverMetCellTypes: public AbstractCellBasedTestSuite
 {
 public:
 
-    //Set up some global variables - (not accurate cell cycle periods)
-    double minTcellCycleDurationTime = 10;
-    double maxTcellCycleDurationTime = 36;
-
-    double minMetcellCycleDurationTime = 8;
-    double maxMetcellCycleDurationTime = 12;
-
-    double minNeutrophilCycleDurationTime = 10;
-    double maxNeutrophilCycleDurationTime = 36;
-
-    double minFibroblastCycleDurationTime = 10;
-    double maxFibroblastCycleDurationTime = 36;
-
     void TestNodeBasedMonolayerWithNewTypes()
     {
-        EXIT_IF_PARALLEL;
+        //Set up some global variables - (not accurate cell cycle periods)
+        double minTcellCycleDurationTime = 10;
+        double maxTcellCycleDurationTime = 36;
+
+        double minMetcellCycleDurationTime = 8;
+        double maxMetcellCycleDurationTime = 12;
+
+        double minNeutrophilCycleDurationTime = 10;
+        double maxNeutrophilCycleDurationTime = 36;
+
+        double minFibroblastCycleDurationTime = 10;
+        double maxFibroblastCycleDurationTime = 36;
+
+        double randPertScale=0.1;
 
         HoneycombMeshGenerator generator(14, 14);
         boost::shared_ptr<MutableMesh<2,2> > p_generating_mesh = generator.GetMesh();
@@ -159,9 +163,12 @@ public:
         MAKE_PTR_ARGS(PlaneBoundaryCondition<2>, p_bc4, (&cell_population, point, normal));
         simulator.AddCellPopulationBoundaryCondition(p_bc4);
 
-        //TODO: add a force modifier
+        //TODO: add an force 
+        MAKE_PTR(RandomMotionForce<2>, p_random_force);
+        p_random_force->SetMovementParameter(randPertScale);
+        simulator.AddForce(p_random_force);
+
 
         simulator.Solve();
     }
-    
 };
