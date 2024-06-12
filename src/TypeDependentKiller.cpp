@@ -26,7 +26,9 @@ void TypeDependentKiller<SPACE_DIM>::CheckAndLabelSingleCellForApoptosis(CellPtr
 template <unsigned DIM>
 void TypeDependentKiller<DIM>::CheckAndLabelCellsForApoptosisOrDeath()
 {   
-    const double age_tolerance = 30;//Just some arbitary death age
+    const double age_tolerance = 25;//Just some arbitary death age
+    //const double oxygen_tolerance = 1;//Just some arbitary death age
+
 
     for (typename AbstractCellPopulation<DIM>::Iterator cell_iter = this->mpCellPopulation->Begin();
          cell_iter != this->mpCellPopulation->End();
@@ -36,10 +38,15 @@ void TypeDependentKiller<DIM>::CheckAndLabelCellsForApoptosisOrDeath()
         if (!(cell_iter->template HasCellProperty<BackgroundCellProliferativeType>()))
         {   
             //add some interesting conditions to cause cell death 
-            if (cell_iter->GetAge()>age_tolerance && !cell_iter->HasApoptosisBegun())
-            {
-                        cell_iter->StartApoptosis();
-                        this->mpCellPopulation->Update();
+            //double oxygen_concentration = cell_iter->GetCellData()->GetItem("oxygen");
+
+            if (cell_iter->GetAge()>age_tolerance)
+            {       
+                if (!cell_iter->HasApoptosisBegun())
+                {
+                    cell_iter->StartApoptosis();
+                    this->mpCellPopulation->Update();
+                }
             }
         }
     }
