@@ -3,3 +3,4 @@ TestChaste.hpp
 TestLiverMetCellTypes.hpp
 TestCellTypesAndPde.hpp
 TestMetDomain.hpp
+TestMetDomainParabolicPde.hpp
