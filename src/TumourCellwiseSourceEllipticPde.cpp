@@ -79,7 +79,7 @@ double TumourCellwiseSourceEllipticPde<DIM>::ComputeLinearInUCoeffInSourceTermAt
     {
         if (mrCellPopulation.GetCellUsingLocationIndex(rNode.GetIndex())-> template HasCellProperty<MetCellProliferativeType>())
         {
-            source_coefficient = 10*mSourceCoefficient;
+            source_coefficient = 5*mSourceCoefficient;
         }
         else
         {

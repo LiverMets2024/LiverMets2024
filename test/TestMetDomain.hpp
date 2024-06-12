@@ -192,7 +192,7 @@ public:
 
         //add a pde - MODIFY THIS PDE 
         MAKE_PTR_ARGS(TumourCellwiseSourceEllipticPde<2>, p_pde, (cell_population, 0.03));
-        MAKE_PTR_ARGS(ConstBoundaryCondition<2>, p_bc, (0.01));
+        MAKE_PTR_ARGS(ConstBoundaryCondition<2>, p_bc, (0.01)); // modify this to no flux
         bool is_neumann_bc = false;
         MAKE_PTR_ARGS(EllipticGrowingDomainPdeModifier<2>, p_pde_modifier, (p_pde, p_bc, is_neumann_bc));
         p_pde_modifier->SetDependentVariableName("CXCL8");
