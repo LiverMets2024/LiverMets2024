@@ -158,7 +158,7 @@ public:
         cell_population.AddCellWriter<CellAgesWriter>();
 
         OffLatticeSimulation<2> simulator(cell_population);
-        simulator.SetOutputDirectory("TestMetDomain");
+        simulator.SetOutputDirectory("TestMetDomainParabolicPde");
         simulator.SetSamplingTimestepMultiple(10);
         simulator.SetEndTime(10.0);
 
