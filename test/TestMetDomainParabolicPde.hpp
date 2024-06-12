@@ -208,6 +208,7 @@ public:
                   (p_pde, p_bc, is_neumann_bc, p_domain, 1.0));
         p_pde_modifier->SetDependentVariableName("CXCL8");
         p_pde_modifier->SetBcsOnBoxBoundary(true);
+        p_pde_modifier->SetOutputGradient(true);
         simulator.AddSimulationModifier(p_pde_modifier);
 
         //add a cell killer - MODIFY THIS KILLER
